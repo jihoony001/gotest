@@ -2,9 +2,12 @@ package main
 
 import (
 	"fmt"
+	"time"
+	"math/rand"
 )
 
  func main() {
+	 rand.Seed(time.Now().UnixNano())
 	 // 무작위 숫자 3개를 만든다
 	 numbers := MakeNumbers()
 
@@ -34,12 +37,33 @@ import (
  func MakeNumbers() [3]int {
 	// 0~9사이의 겹치지 않는 무작위 숫자 3개를 반환한다.
 	var rst [3]int
+
+	for i :=0; i < 3; i++ {
+		for {
+			n := rand.Intn(10)
+			duplicated := false
+			for j :=0; j < i; j++ {
+				if rst[j] == n {
+					// 겹친다. 다시 뽑는다.
+					duplicated = true
+					break
+				}
+			}
+			if !duplicated { // 겹치지 않으면 숫자를 배열에 추가
+				rst[i] = n
+				break
+			}
+		}
+	}
+
+	fmt.Println(rst)
 	return rst
  }
 
  func InputNumbers() [3]int {
 	 // 키보드로부터 0~9사이의 겹치지 않는 숫자 3개를 입력받아 반환한다.
 	 var rst [3]int
+
 	 return rst
  }
 
